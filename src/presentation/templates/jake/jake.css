@@ -1,0 +1,98 @@
+.template-jake {
+  --cv-inner-indent: 0.15in;
+  --cv-date-inset: 0.08in;
+
+  font-family: 'Lato', sans-serif;
+}
+
+.template-jake .cv-link {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  text-decoration-thickness: 0.5pt;
+}
+
+.template-jake .cv-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15in;
+  margin-bottom: 0.2in;
+}
+
+.template-jake .cv-header__photo {
+  width: 1.05in;
+  height: 1.05in;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.template-jake .cv-header__text {
+  text-align: center;
+}
+
+.template-jake .cv-header__name {
+  font-size: 25pt;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.template-jake .cv-contact {
+  column-gap: 0.18in;
+  max-width: 5in;
+  margin: 0 auto;
+  font-size: var(--cv-font-small);
+}
+
+.template-jake .cv-contact__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.07in;
+}
+
+.template-jake .cv-contact__icon {
+  font-size: 9pt;
+}
+
+.template-jake .cv-section {
+  margin-top: 0.08in;
+}
+
+.template-jake .cv-section__title {
+  font-size: 13pt;
+  font-weight: 400;
+  padding-bottom: 1pt;
+  margin-bottom: 4pt;
+  border-bottom: 0.6pt solid var(--cv-text);
+}
+
+.template-jake .cv-subheading {
+  padding-left: var(--cv-inner-indent);
+  padding-right: var(--cv-date-inset);
+}
+
+.template-jake .cv-subheading__row--small {
+  font-size: var(--cv-font-small);
+}
+
+.template-jake .cv-highlights {
+  padding-left: 0.5in;
+  margin-bottom: 3pt;
+  font-size: var(--cv-font-small);
+}
+
+.template-jake .cv-highlights li::marker {
+  font-size: 8pt;
+}
+
+.template-jake .cv-skills {
+  padding-left: var(--cv-inner-indent);
+  line-height: 1.25;
+}
+
+.template-jake .cv-certifications {
+  padding-left: 0.4in;
+}
+
+.template-jake .cv-certifications li {
+  margin-top: 4pt;
+}

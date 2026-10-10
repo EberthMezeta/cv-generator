@@ -1,0 +1,74 @@
+.cv-page {
+  --cv-text: #000;
+  --cv-font-body: 11pt;
+  --cv-font-small: 10pt;
+
+  width: 8.5in;
+  min-height: 11in;
+  --cv-page-margin-block: 0.45in;
+  --cv-page-margin-inline: 0.5in;
+  --cv-print-page-margin-inline: 0.5in;
+
+  padding: var(--cv-page-margin-block) var(--cv-page-margin-inline);
+  background: #fff;
+  color: var(--cv-text);
+  font-size: var(--cv-font-body);
+  line-height: 1.2;
+  color-scheme: light;
+}
+
+.cv-page h1,
+.cv-page h2,
+.cv-page h3,
+.cv-page ul {
+  margin: 0;
+}
+
+.cv-link {
+  color: inherit;
+}
+
+.cv-contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 0;
+  list-style: none;
+}
+
+.cv-entry {
+  break-inside: avoid;
+}
+
+.cv-subheading__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.2in;
+}
+
+.cv-subheading__title {
+  font-size: var(--cv-font-body);
+  font-weight: 700;
+}
+
+.cv-skills {
+  list-style: none;
+}
+
+.cv-highlights,
+.cv-certifications {
+  list-style: disc;
+}
+
+@page {
+  size: letter;
+  margin: 0.45in 0.5in;
+}
+
+@media print {
+  .cv-page {
+    width: auto;
+    min-height: auto;
+    padding: 0 calc(var(--cv-page-margin-inline) - var(--cv-print-page-margin-inline));
+  }
+}

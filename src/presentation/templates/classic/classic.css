@@ -1,0 +1,69 @@
+.template-classic {
+  font-family: 'Source Serif 4', Georgia, serif;
+  --cv-page-margin-inline: 0.6in;
+}
+
+.template-classic .cv-link {
+  text-decoration: none;
+}
+
+.template-classic .cv-header {
+  text-align: center;
+  margin-bottom: 0.12in;
+}
+
+.template-classic .cv-header__name {
+  font-size: 22pt;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.template-classic .cv-contact {
+  margin-top: 4pt;
+  font-size: var(--cv-font-small);
+}
+
+.template-classic .cv-contact__item:not(:last-child)::after {
+  content: '|';
+  margin-inline: 0.1in;
+}
+
+.template-classic .cv-section {
+  margin-top: 0.1in;
+}
+
+.template-classic .cv-section__title {
+  font-size: 11.5pt;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding-bottom: 2pt;
+  margin-bottom: 5pt;
+  border-bottom: 1pt solid var(--cv-text);
+}
+
+.template-classic .cv-entry + .cv-entry {
+  margin-top: 5pt;
+}
+
+.template-classic .cv-subheading__row--small {
+  font-size: var(--cv-font-body);
+}
+
+.template-classic .cv-highlights {
+  padding-left: 0.25in;
+  margin-top: 2pt;
+  font-size: var(--cv-font-small);
+  line-height: 1.2;
+}
+
+.template-classic .cv-skills {
+  padding-left: 0;
+  line-height: 1.25;
+}
+
+.template-classic .cv-certifications {
+  padding-left: 0.25in;
+  line-height: 1.25;
+}
