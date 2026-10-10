@@ -1,0 +1,12 @@
+node_modules
+dist
+.git
+.gitignore
+*.log
+.vscode
+.idea
+.DS_Store
+Containerfile
+compose*.yaml
+.dockerignore
+README.md

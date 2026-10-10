@@ -1,0 +1,14 @@
+services:
+  cv-generator:
+    build:
+      context: .
+      dockerfile: Containerfile
+      target: production
+    image: localhost/cv-generator:latest
+    container_name: cv-generator
+    ports:
+      - "${CV_GENERATOR_PORT:-8080}:8080"
+    restart: unless-stopped
+    read_only: true
+    security_opt:
+      - no-new-privileges:true

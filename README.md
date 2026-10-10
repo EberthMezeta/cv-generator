@@ -36,6 +36,51 @@ los sistemas de seguimiento de candidatos. El panel **Compatibilidad ATS** adem�
 - Un punto puede ser un texto o `{ "label": "...", "text": "..." }` para mostrar la etiqueta en negritas.
 - `locale`: `"es"` o `"en"`.
 
+## Levantar con contenedores
+
+El `Containerfile` es multi-stage y funciona igual con Docker y con Podman:
+
+- `dependencies`: instala dependencias con caché de npm (solo se repite si cambia `package-lock.json`).
+- `development`: servidor de Vite con hot reload.
+- `build`: ejecuta las pruebas, compila y precomprime los assets (gzip y brotli).
+- `production`: imagen final de ~15 MB con `static-web-server`, sin privilegios, en el puerto 8080.
+
+### Producción
+
+```bash
+docker compose up -d --build    # o: podman compose up -d --build
+docker compose down             # o: podman compose down
+```
+
+El puerto del equipo se cambia con `CV_GENERATOR_PORT` (por defecto `8080`). Abre http://localhost:8080;
+el endpoint `/health` responde `OK`.
+
+Tiempos de build, tamaño, latencia y el porqué de cada optimización: [docs/rendimiento-contenedores.md](docs/rendimiento-contenedores.md).
+
+`podman compose` necesita tener instalado `podman-compose` o `docker-compose`. Sin compose:
+
+```bash
+podman build -t cv-generator .
+podman run -d --name cv-generator -p 8080:8080 --read-only cv-generator
+```
+
+### Desarrollo
+
+```bash
+docker compose -f compose.dev.yaml up --build    # o: podman compose -f compose.dev.yaml up --build
+```
+
+El código se monta en el contenedor y Vite recarga los cambios en http://localhost:5173
+(`CV_GENERATOR_DEV_PORT` cambia el puerto). Si los cambios no se detectan (por ejemplo en WSL o macOS),
+usa `VITE_USE_POLLING=true`.
+
+`node_modules` vive en un volumen propio. Después de cambiar dependencias, recréalo:
+
+```bash
+docker compose -f compose.dev.yaml down -v
+docker compose -f compose.dev.yaml up --build
+```
+
 ## Arquitectura
 
 ```
