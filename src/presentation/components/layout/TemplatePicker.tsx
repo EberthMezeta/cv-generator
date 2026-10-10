@@ -9,7 +9,7 @@ interface Props {
 export function TemplatePicker({ templates, selectedTemplateId, onSelect }: Props) {
   return (
     <label className="template-picker">
-      Plantilla
+      <span className="template-picker__label">Plantilla</span>
       <select value={selectedTemplateId} onChange={(event) => onSelect(event.target.value)}>
         {templates.map((template) => (
           <option key={template.id} value={template.id}>

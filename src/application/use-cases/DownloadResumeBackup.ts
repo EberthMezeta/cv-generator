@@ -1,4 +1,5 @@
 import type { Resume } from '../../domain/entities/Resume'
+import { resumeFileName } from '../formatters/fileName'
 import type { ResumeBackup } from '../ports/ResumeBackup'
 
 export class DownloadResumeBackup {
@@ -9,6 +10,6 @@ export class DownloadResumeBackup {
   }
 
   execute(resume: Resume): void {
-    this.backup.download(resume)
+    this.backup.download(resume, resumeFileName(resume.personal.fullName))
   }
 }

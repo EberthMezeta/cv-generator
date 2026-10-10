@@ -6,13 +6,22 @@ const AUTOSAVE_DELAY_MS = 400
 
 type LoadState = { status: 'loading' } | { status: 'error'; error: Error } | { status: 'ready'; resume: Resume }
 
+export type ResumeEditor = ReturnType<typeof useResumeEditor>
+
 export type SaveStatus = 'saved' | 'pending' | 'failed'
 
 export type ResumeFieldUpdater = <Field extends keyof Resume>(field: Field, value: Resume[Field]) => void
 
 export function useResumeEditor() {
-  const { getResume, saveResume, resetResume, exportResumeToPdf, downloadResumeBackup, restoreResumeBackup } =
-    useContainer()
+  const {
+    getResume,
+    saveResume,
+    resetResume,
+    exportResumeToPdf,
+    downloadResumeBackup,
+    downloadResumeTemplate,
+    restoreResumeBackup,
+  } = useContainer()
   const [loadState, setLoadState] = useState<LoadState>({ status: 'loading' })
   const [saveStatus, setSaveStatus] = useState<SaveStatus>('saved')
 
@@ -59,6 +68,8 @@ export function useResumeEditor() {
     if (resume) downloadResumeBackup.execute(resume)
   }, [resume, downloadResumeBackup])
 
+  const downloadTemplate = useCallback(() => downloadResumeTemplate.execute(), [downloadResumeTemplate])
+
   const restoreBackup = useCallback(
     (file: File) => restoreResumeBackup.execute(file).then(replaceResume),
     [restoreResumeBackup, replaceResume],
@@ -69,5 +80,14 @@ export function useResumeEditor() {
     [resetResume, replaceResume],
   )
 
-  return { loadState, saveStatus, updateField, exportPdf, downloadBackup, restoreBackup, resetToInitial }
+  return {
+    loadState,
+    saveStatus,
+    updateField,
+    exportPdf,
+    downloadBackup,
+    downloadTemplate,
+    restoreBackup,
+    resetToInitial,
+  }
 }

@@ -1,23 +1,24 @@
 import { useEffect, useState } from 'react'
 
-function readStoredValue(key: string): string | null {
+function readStoredValue<T>(key: string): T | null {
   try {
-    return localStorage.getItem(key)
+    const storedJson = localStorage.getItem(key)
+    return storedJson === null ? null : (JSON.parse(storedJson) as T)
   } catch {
     return null
   }
 }
 
-function writeStoredValue(key: string, value: string): void {
+function writeStoredValue<T>(key: string, value: T): void {
   try {
-    localStorage.setItem(key, value)
+    localStorage.setItem(key, JSON.stringify(value))
   } catch {
     return
   }
 }
 
-export function usePersistentState(key: string, initialValue: string) {
-  const [value, setValue] = useState(() => readStoredValue(key) ?? initialValue)
+export function usePersistentState<T>(key: string, initialValue: T) {
+  const [value, setValue] = useState<T>(() => readStoredValue<T>(key) ?? initialValue)
 
   useEffect(() => writeStoredValue(key, value), [key, value])
 
