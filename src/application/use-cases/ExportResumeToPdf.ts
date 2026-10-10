@@ -1,7 +1,7 @@
 import type { Resume } from '../../domain/entities/Resume'
 import type { ResumeExporter } from '../ports/ResumeExporter'
 
-export class ExportResume {
+export class ExportResumeToPdf {
   private readonly exporter: ResumeExporter
 
   constructor(exporter: ResumeExporter) {

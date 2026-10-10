@@ -1,6 +1,6 @@
 import type { Resume } from '../domain/entities/Resume'
 
-export const resume: Resume = {
+export const initialResume: Resume = {
   locale: 'es',
   personal: {
     fullName: 'Ana García López',

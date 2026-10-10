@@ -1,36 +1,36 @@
 import type { DateRange, Resume } from '../entities/Resume'
+import { isYearMonth } from './yearMonth'
 
 export interface ValidationIssue {
-  path: string
+  field: string
   message: string
 }
 
-const YEAR_MONTH = /^\d{4}-(0[1-9]|1[0-2])$/
-
-function validatePeriod(period: DateRange, path: string): ValidationIssue[] {
-  const issues: ValidationIssue[] = []
-  if (!YEAR_MONTH.test(period.start)) {
-    issues.push({ path: `${path}.start`, message: `Fecha inválida "${period.start}", usa YYYY-MM` })
+function validatePeriod(period: DateRange, field: string): ValidationIssue[] {
+  if (!isYearMonth(period.start)) {
+    return [{ field, message: 'Falta la fecha de inicio' }]
   }
-  if (period.end !== 'present') {
-    if (!YEAR_MONTH.test(period.end)) {
-      issues.push({ path: `${path}.end`, message: `Fecha inválida "${period.end}", usa YYYY-MM` })
-    } else if (period.end < period.start) {
-      issues.push({ path, message: 'La fecha de fin es anterior a la de inicio' })
-    }
+  if (period.end === 'present') return []
+  if (!isYearMonth(period.end)) {
+    return [{ field, message: 'Falta la fecha de fin o marca "Actualidad"' }]
   }
-  return issues
+  if (period.end < period.start) {
+    return [{ field, message: 'La fecha de fin es anterior a la de inicio' }]
+  }
+  return []
 }
 
 export function validateResume(resume: Resume): ValidationIssue[] {
-  const issues: ValidationIssue[] = []
+  const nameIssues: ValidationIssue[] = resume.personal.fullName.trim()
+    ? []
+    : [{ field: 'Datos personales', message: 'El nombre es obligatorio' }]
 
-  if (!resume.personal.fullName.trim()) {
-    issues.push({ path: 'personal.fullName', message: 'El nombre es obligatorio' })
-  }
+  const educationIssues = resume.education.flatMap((education, index) =>
+    validatePeriod(education.period, `Educación ${index + 1}`),
+  )
+  const experienceIssues = resume.experience.flatMap((experience, index) =>
+    validatePeriod(experience.period, `Experiencia ${index + 1}`),
+  )
 
-  resume.education.forEach((e, i) => issues.push(...validatePeriod(e.period, `education[${i}].period`)))
-  resume.experience.forEach((e, i) => issues.push(...validatePeriod(e.period, `experience[${i}].period`)))
-
-  return issues
+  return [...nameIssues, ...educationIssues, ...experienceIssues]
 }

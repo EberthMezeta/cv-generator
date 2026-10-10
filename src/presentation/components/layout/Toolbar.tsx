@@ -2,22 +2,18 @@ import type { ReactNode } from 'react'
 
 interface Props {
   pageCount: number
-  onExport: () => void
-  children?: ReactNode
+  children: ReactNode
 }
 
-export function Toolbar({ pageCount, onExport, children }: Props) {
+export function Toolbar({ pageCount, children }: Props) {
   const exceedsOnePage = pageCount > 1
   return (
-    <div className="toolbar">
+    <header className="toolbar">
       <span className="toolbar__title">CV Generator</span>
-      {children}
       <span className={exceedsOnePage ? 'toolbar__pages toolbar__pages--warn' : 'toolbar__pages'}>
         {pageCount} {pageCount === 1 ? 'página' : 'páginas'}
       </span>
-      <button type="button" className="toolbar__button" onClick={onExport}>
-        Descargar PDF
-      </button>
-    </div>
+      <div className="toolbar__actions">{children}</div>
+    </header>
   )
 }
